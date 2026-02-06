@@ -55,7 +55,8 @@ export default function AdminPage() {
       return;
     }
 
-    if (!session) {
+    const userId = session?.user.id;
+    if (!userId) {
       setStatus("error");
       setMessage("로그인이 필요합니다.");
       return;
@@ -87,7 +88,7 @@ export default function AdminPage() {
         .filter(Boolean);
 
       const { error: insertError } = await supabase.from("reports").insert({
-        user_id: session.user.id,
+        user_id: userId,
         title,
         description,
         file_url: publicUrlData.publicUrl,
