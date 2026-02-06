@@ -55,6 +55,12 @@ export default function AdminPage() {
       return;
     }
 
+    if (!session) {
+      setStatus("error");
+      setMessage("로그인이 필요합니다.");
+      return;
+    }
+
     try {
       const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
       const filePath = `${fileName}`;
