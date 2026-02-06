@@ -1,5 +1,5 @@
 import ReportsClient, { type Report } from "@/components/ReportsClient";
-import { supabaseServer } from "@/lib/supabaseServer";
+import { getSupabaseServer } from "@/lib/supabaseServer";
 
 const fallbackReports: Report[] = [
   {
@@ -32,6 +32,11 @@ const fallbackReports: Report[] = [
 ];
 
 async function getReports() {
+  const supabaseServer = getSupabaseServer();
+  if (!supabaseServer) {
+    return fallbackReports;
+  }
+
   const { data, error } = await supabaseServer
     .from("reports")
     .select("id,title,description,file_url,published_at,tags,category")

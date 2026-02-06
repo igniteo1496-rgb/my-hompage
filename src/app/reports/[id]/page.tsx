@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { supabaseServer } from "@/lib/supabaseServer";
+import { getSupabaseServer } from "@/lib/supabaseServer";
 
 type Report = {
   id: string;
@@ -11,6 +11,11 @@ type Report = {
 };
 
 async function getReport(id: string) {
+  const supabaseServer = getSupabaseServer();
+  if (!supabaseServer) {
+    return null;
+  }
+
   const { data, error } = await supabaseServer
     .from("reports")
     .select("id,title,description,file_url,published_at,tags")
