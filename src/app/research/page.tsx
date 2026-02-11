@@ -1,5 +1,6 @@
 import ReportsClient, { type Report } from "@/components/ReportsClient";
 import { getSupabaseServer } from "@/lib/supabaseServer";
+import { Suspense } from "react";
 
 const fallbackReports: Report[] = [
   {
@@ -109,7 +110,9 @@ export default async function ResearchPage() {
 
             <div className="all-block">
               <h3>전체 리서치</h3>
-              <ReportsClient reports={reportItems} />
+              <Suspense fallback={<div className="empty-state">리서치를 불러오는 중입니다.</div>}>
+                <ReportsClient reports={reportItems} />
+              </Suspense>
             </div>
           </div>
         </section>
